@@ -183,6 +183,7 @@ function removeBook(bookId) {
   books.splice(book, 1);
 
   saveDataStorage();
+  window.alert(`Buku ${toTitleCase(book.title)} berhasil dihapus`);
 }
 
 function searchElemen() {
@@ -199,6 +200,12 @@ function searchElemen() {
 
   undoCompleteReadBook(book.id);
   renderElemen();
+}
+
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 }
 
 // export
