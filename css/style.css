@@ -122,6 +122,7 @@ main {
 .search_section > form > input {
   padding: 5px;
   border-radius: 5px;
+  text-transform: capitalize;
 }
 
 .search_section > form > button {

@@ -34,7 +34,7 @@ function loadDataFromStorage() {
         books.push(book);
       }
 
-      renderElemen();;
+      renderElemen();
     }
   }
 }
@@ -68,15 +68,29 @@ function templateElement(bookObject) {
     button2.innerText = "Hapus Buku";
 
     // event listener button
-    button1.addEventListener("click", () => undoCompleteReadBook(bookObject.id));
-    button2.addEventListener("click", () => removeBook(bookObject.id));
+    button1.addEventListener("click", () => {
+      undoCompleteReadBook(bookObject.id);
+      renderElemen();
+    });
+
+    button2.addEventListener("click", () => {
+      removeBook(bookObject.id);
+      renderElemen();
+    });
   } else {
     button1.innerText = "Buku Selesai Dibaca";
     button2.innerText = "Hapus Buku";
 
     // event listener button
-    button1.addEventListener("click", () => addCompleteReadBook(bookObject.id));
-    button2.addEventListener("click", () => removeBook(bookObject.id));
+    button1.addEventListener("click", () => {
+      addCompleteReadBook(bookObject.id);
+      renderElemen();
+    });
+
+    button2.addEventListener("click", () => {
+      removeBook(bookObject.id);
+      renderElemen();
+    });
   }
 
   actionContainerElement.append(button1, button2);
@@ -121,7 +135,7 @@ function addBook() {
   renderElemen();
 }
 
-function findBook(bookId) {
+function findBookById(bookId) {
   for (const book of books) {
     if (book.id === bookId) {
       return book;
@@ -131,38 +145,61 @@ function findBook(bookId) {
   return null;
 }
 
+function findBookByTitle(bookTitle) {
+  for (const book of books) {
+    if (book.title === bookTitle) {
+      return book;
+    }
+  }
+
+  return null;
+}
+
 function addCompleteReadBook(bookId) {
-  const book = findBook(bookId);
+  const book = findBookById(bookId);
 
   if (book === null) return;
 
   book.isComplete = true;
 
   saveDataStorage();
-  renderElemen();
 }
 
 function undoCompleteReadBook(bookId) {
-  const book = findBook(bookId);
+  const book = findBookById(bookId);
 
   if (book === null) return;
 
   book.isComplete = false;
 
   saveDataStorage();
-  renderElemen();
 }
 
 function removeBook(bookId) {
-  const book = findBook(bookId);
+  const book = findBookById(bookId);
 
   if (book === null) return;
 
   books.splice(book, 1);
 
   saveDataStorage();
+}
+
+function searchElemen() {
+  const searchBookTitle = document.getElementById("searchBookTitle").value;
+
+  if (searchBookTitle === "") {
+    return window.alert("Tidak Ada data yang dimasukkan");
+  }
+
+  const book = findBookByTitle(searchBookTitle);
+  if (!book) {
+    return window.alert("Sistem tidak menemukan buku yang dicari");
+  }
+
+  undoCompleteReadBook(book.id);
   renderElemen();
 }
 
 // export
-export { checkAvailabilityStorageBrowser, addBook, loadDataFromStorage };
+export { checkAvailabilityStorageBrowser, addBook, loadDataFromStorage, searchElemen };

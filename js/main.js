@@ -1,13 +1,20 @@
-import { addBook, checkAvailabilityStorageBrowser, loadDataFromStorage } from "./function.js";
+import { addBook, checkAvailabilityStorageBrowser, loadDataFromStorage, searchElemen } from "./function.js";
 
-const formInput = document.getElementById("inputBook");
+const formInputBook = document.getElementById("inputBook");
+const formInputSearch = document.getElementById("searchBook");
 
 document.addEventListener("DOMContentLoaded", () => {
   checkAvailabilityStorageBrowser();
   loadDataFromStorage();
 
-  formInput.addEventListener("submit", (event) => {
+  formInputBook.addEventListener("submit", (event) => {
     event.preventDefault();
     addBook();
+  });
+
+  formInputSearch.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    searchElemen();
   });
 });
