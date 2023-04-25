@@ -25,6 +25,20 @@ function saveDataStorage() {
   }
 }
 
+function loadDataFromStorage() {
+  if (checkAvailabilityStorageBrowser()) {
+    const dataFromStorage = JSON.parse(localStorage.getItem(KEY_STORAGE));
+
+    if (dataFromStorage !== null) {
+      for (const book of dataFromStorage) {
+        books.push(book);
+      }
+
+      renderElemen();;
+    }
+  }
+}
+
 function templateElement(bookObject) {
   const articleElement = document.createElement("article");
   articleElement.setAttribute("class", "book_item");
@@ -102,8 +116,8 @@ function addBook() {
   const data_book = generateBookObject(id_buku, inputJudul, inputPenulis, inputTahun, inputIsComplete);
 
   books.push(data_book);
-  //   saveDataStorage();
 
+  saveDataStorage();
   renderElemen();
 }
 
@@ -124,6 +138,7 @@ function addCompleteReadBook(bookId) {
 
   book.isComplete = true;
 
+  saveDataStorage();
   renderElemen();
 }
 
@@ -134,6 +149,7 @@ function undoCompleteReadBook(bookId) {
 
   book.isComplete = false;
 
+  saveDataStorage();
   renderElemen();
 }
 
@@ -144,8 +160,9 @@ function removeBook(bookId) {
 
   books.splice(book, 1);
 
+  saveDataStorage();
   renderElemen();
 }
 
 // export
-export { checkAvailabilityStorageBrowser, addBook };
+export { checkAvailabilityStorageBrowser, addBook, loadDataFromStorage };
