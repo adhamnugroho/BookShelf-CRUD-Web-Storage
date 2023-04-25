@@ -1,0 +1,12 @@
+{
+  "name": "bookshelf-project-web-storage",
+  "version": "1.0.0",
+  "description": "a website used to managed book based on read and unread ",
+  "main": "js/main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "adhamnugroho",
+  "license": "ISC"
+}
